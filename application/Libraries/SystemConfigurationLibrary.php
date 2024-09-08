@@ -74,20 +74,20 @@ final class SystemConfigurationLibrary
     public static function registerSuperAdminPermissions(): void
     {
 
-        $statement = $db->query()
-
-        $permissions = $db->query()
-
-        $permissions = Connect::getInstance()
-            ->query("")
-            ->fetchAll(PDO::FETCH_OBJ);
-
-        if(!empty($permissions)){
-            foreach ($permissions as $permission){
-                $newLevelPermission = new LevelPermissionModel();
-                $newLevelPermission->bootstrap(1, $permission->id);
-                $newLevelPermission->save();
-            }
-        }
+//        $statement = $db->query()
+//
+//        $permissions = $db->query()
+//
+//        $permissions = Connect::getInstance()
+//            ->query("")
+//            ->fetchAll(PDO::FETCH_OBJ);
+//
+//        if(!empty($permissions)){
+//            foreach ($permissions as $permission){
+//                $newLevelPermission = new LevelPermissionModel();
+//                $newLevelPermission->bootstrap(1, $permission->id);
+//                $newLevelPermission->save();
+//            }
+//        }
     }
 }
