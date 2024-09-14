@@ -57,4 +57,12 @@ class TokenViewModel
     {
         $this->token = $token;
     }
+
+    public function data(): \stdClass
+    {
+        $data = new \stdClass();
+        $data->token = $this->token;
+        $data->type = $this->type;
+        return $data;
+    }
 }

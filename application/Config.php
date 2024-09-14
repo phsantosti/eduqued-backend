@@ -1,7 +1,7 @@
 <?php
 const DATA_LAYER_CONFIG = [
     "driver" => "mysql",
-    "host" => "cloudserver.pedrohsantos.com.br",
+    "host" => "mariadb.eduqued.com.br",
     "port" => "3306",
     "dbname" => "eduqued",
     "username" => "root",
@@ -16,3 +16,8 @@ const DATA_LAYER_CONFIG = [
 const CONF_APP_IS_DEBUG = true;
 const CONF_APP_DOMAIN = "eduqued.com.br";
 const CONF_APP_SECURITY_KEY = "hNoXw6eKeIFuiqyrBgy18q865Lnuw3ob";
+/*** PASSWORD */
+const CONF_PASSWD_MIN_LEN = 8;
+const CONF_PASSWD_MAX_LEN = 40;
+const CONF_PASSWD_ALGO = PASSWORD_DEFAULT;
+const CONF_PASSWD_OPTION = ["cost" => 10];

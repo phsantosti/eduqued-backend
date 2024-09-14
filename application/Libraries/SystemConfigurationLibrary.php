@@ -3,8 +3,11 @@
 namespace Application\Libraries;
 
 use Application\Middlewares\AuthenticationMiddleware;
+use Application\Middlewares\CorsMiddleware;
+use Application\Models\User\LevelPermissionModel;
 use Application\Models\User\PermissionModel;
 use CoffeeCode\DataLayer\Connect;
+use PDO;
 use Slim\App;
 use Slim\Psr7\Request;
 
@@ -20,8 +23,10 @@ final class SystemConfigurationLibrary
         }
 
         $app->setBasePath($basePath);
+        $app->addBodyParsingMiddleware();
         $app->addRoutingMiddleware();
         $app->addErrorMiddleware(CONF_APP_IS_DEBUG, CONF_APP_IS_DEBUG, CONF_APP_IS_DEBUG);
+        $app->add(CorsMiddleware::class);
         $app->add(AuthenticationMiddleware::class);
 
         return $app;
@@ -68,26 +73,30 @@ final class SystemConfigurationLibrary
                     }
                 }
             }
+
+            self::registerSuperAdminPermissions();
         }
     }
 
     public static function registerSuperAdminPermissions(): void
     {
+        $permissions = Connect::getInstance()
+            ->query("SELECT * FROM permissions
+            WHERE
+                  permissions.status = 'active' AND
+                  permissions.id NOT IN (
+                      SELECT levels_permissions.permission
+                      FROM levels_permissions
+                      WHERE levels_permissions.id = 1
+                  );")
+            ->fetchAll(PDO::FETCH_OBJ);
 
-//        $statement = $db->query()
-//
-//        $permissions = $db->query()
-//
-//        $permissions = Connect::getInstance()
-//            ->query("")
-//            ->fetchAll(PDO::FETCH_OBJ);
-//
-//        if(!empty($permissions)){
-//            foreach ($permissions as $permission){
-//                $newLevelPermission = new LevelPermissionModel();
-//                $newLevelPermission->bootstrap(1, $permission->id);
-//                $newLevelPermission->save();
-//            }
-//        }
+        if(!empty($permissions)){
+            foreach ($permissions as $permission){
+                $newLevelPermission = new LevelPermissionModel();
+                $newLevelPermission->bootstrap(1, $permission->id);
+                $newLevelPermission->save();
+            }
+        }
     }
 }

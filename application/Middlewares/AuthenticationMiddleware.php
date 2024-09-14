@@ -70,6 +70,10 @@ final class AuthenticationMiddleware implements MiddlewareInterface
             return true;
         }
 
+        if(mb_strpos($route,"website")){
+            return true;
+        }
+
         return false;
     }
 }

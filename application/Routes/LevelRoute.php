@@ -2,14 +2,14 @@
 
 namespace Application\Routes;
 
-use Application\Controllers\StatusController;
+use Application\Controllers\LevelController;
 use Slim\App;
 
-final class StatusRoute
+final class LevelRoute
 {
     public static function initRoutes(App $app): App
     {
-        $app->get("/status", [StatusController::class, 'status']);
+        $app->post("/levels/search", [LevelController::class, 'search']);
         return $app;
     }
 }
